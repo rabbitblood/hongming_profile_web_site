@@ -192,6 +192,22 @@ function init() {
     });
 
 
+    profileText.style.opacity = 0;
+    profileText.style.transform = "translateX(-100px)";
+
+    educationText.style.opacity = 0;
+    educationText.style.transform = "translateX(100px)";
+
+    experienceText.style.opacity = 0;
+    experienceText.style.transform = "translateX(-100px)";
+
+    projectText.style.opacity = 0;
+    projectText.style.transform = "translateX(100px)";
+
+    skillText.style.opacity = 0;
+    skillText.style.transform = "translateX(-100px)";
+
+
     sphere.position.y += (window.scrollY - lastScrollPos) * 0.005;
     sphere.position.z += (window.scrollY - lastScrollPos) * 0.01;
     lastScrollPos = window.scrollY;
