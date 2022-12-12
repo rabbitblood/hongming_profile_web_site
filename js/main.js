@@ -12,6 +12,8 @@ let stars = [];
 let humanoid;
 let gradHat;
 let computer;
+let bulb;
+let book;
 const colorTemplate = ["#ff6e27", "#fbf665", "#73fffe", "#6287f8", "#383e65"]
 
 //elements
@@ -157,6 +159,38 @@ function init() {
         computer.show = false;
     });
 
+    //bulb
+    loader.load('./../models/bulb.fbx', function (object) {
+        object.traverse(function (child) {
+            if (child.isMesh) {
+                child.material = materialStandard;
+            }
+        });
+
+        scene.add(object);
+        object.scale.set(0.04, 0.04, 0.04);
+        object.position.set(0, -1, -50);
+
+        bulb = object;
+        bulb.show = false;
+    });
+
+    //book
+    loader.load('./../models/book.fbx', function (object) {
+        object.traverse(function (child) {
+            if (child.isMesh) {
+                child.material = materialStandard;
+            }
+        });
+
+        scene.add(object);
+        object.scale.set(0.001, 0.001, 0.001);
+        object.position.set(0, -1, -50);
+
+        book = object;
+        book.show = false;
+    });
+
 
     sphere.position.y += (window.scrollY - lastScrollPos) * 0.005;
     sphere.position.z += (window.scrollY - lastScrollPos) * 0.01;
@@ -232,9 +266,11 @@ document.addEventListener("scroll", function (e) {
         projectText.getClientRects()[0].bottom > 200) {
         projectText.style.opacity = 1;
         projectText.style.transform = "translateX(0)";
+        bulb.show = true;
     } else {
         projectText.style.opacity = 0;
         projectText.style.transform = "translateX(100px)";
+        bulb.show = false;
     }
 
     //skill text
@@ -242,9 +278,11 @@ document.addEventListener("scroll", function (e) {
         skillText.getClientRects()[0].bottom > 200) {
         skillText.style.opacity = 1;
         skillText.style.transform = "translateX(0)";
+        book.show = true;
     } else {
         skillText.style.opacity = 0;
         skillText.style.transform = "translateX(-100px)";
+        book.show = false;
     }
 
 });
@@ -305,6 +343,35 @@ function animate() {
 
     }
 
+    if (bulb != undefined) {
+        bulb.rotation.y += 0.01;
+
+        if (bulb.show) {
+            if (bulb.position.z < 0) {
+                bulb.position.z += 1;
+            }
+        } else {
+            if (bulb.position.z > -50) {
+                bulb.position.z -= 1;
+            }
+        }
+
+    }
+
+    if (book != undefined) {
+        book.rotation.y += 0.01;
+
+        if (book.show) {
+            if (book.position.z < 0) {
+                book.position.z += 1;
+            }
+        } else {
+            if (book.position.z > -50) {
+                book.position.z -= 1;
+            }
+        }
+
+    }
 
     sphere.rotation.y -= 0.01;
 
