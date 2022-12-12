@@ -6,15 +6,23 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/
 
 
 
-
+//data
 let lastScrollPos = 0;
 let stars = [];
-
+let humanoid;
+let gradHat;
+let computer;
 const colorTemplate = ["#ff6e27", "#fbf665", "#73fffe", "#6287f8", "#383e65"]
 
-
+//elements
 const bg = document.querySelector('#bg');
+const profileText = document.querySelector('.profile-text');
+const educationText = document.querySelector('.education-text');
+const experienceText = document.querySelector('.experience-text');
+const projectText = document.querySelector('.project-text');
+const skillText = document.querySelector('.skill-text');
 
+//scene
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, bg.clientWidth / bg.clientHeight, 0.1, 1000);
 
@@ -36,6 +44,11 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(bg.clientWidth, bg.clientHeight);
 renderer.setClearColor("#000000", 0);
 document.body.appendChild(renderer.domElement);
+
+//fbs loader
+//humanoid
+const loader = new FBXLoader();
+
 
 //cube
 const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -91,10 +104,60 @@ window.addEventListener('resize', function () {
     renderer.setSize(bg.clientWidth, bg.clientHeight);
 });
 
-//functions \
+//functions 
 init();
 
 function init() {
+    //load humanoid model
+    loader.load('./../models/humanoid.fbx', function (object) {
+        object.traverse(function (child) {
+            if (child.isMesh) {
+                child.material = materialStandard;
+            }
+        });
+
+        scene.add(object);
+        object.scale.set(0.004, 0.004, 0.004);
+        object.position.set(0, -2, -50);
+
+        humanoid = object;
+        humanoid.show = false;
+    });
+
+
+    //grad hat
+    loader.load('./../models/grad-hat.fbx', function (object) {
+        object.traverse(function (child) {
+            if (child.isMesh) {
+                child.material = materialStandard;
+            }
+        });
+
+        scene.add(object);
+        object.scale.set(0.01, 0.01, 0.01);
+        object.position.set(0, -1, -50);
+
+        gradHat = object;
+        gradHat.show = false;
+    });
+
+    //computer
+    loader.load('./../models/computador.fbx', function (object) {
+        object.traverse(function (child) {
+            if (child.isMesh) {
+                child.material = materialStandard;
+            }
+        });
+
+        scene.add(object);
+        object.scale.set(0.01, 0.01, 0.01);
+        object.position.set(0, -1, -50);
+
+        computer = object;
+        computer.show = false;
+    });
+
+
     sphere.position.y += (window.scrollY - lastScrollPos) * 0.005;
     sphere.position.z += (window.scrollY - lastScrollPos) * 0.01;
     lastScrollPos = window.scrollY;
@@ -126,12 +189,102 @@ document.addEventListener("scroll", function (e) {
     sphere.position.z += (window.scrollY - lastScrollPos) * 0.01;
 
     lastScrollPos = window.scrollY;
+
+
+    //profile text
+    if (profileText.getClientRects()[0].top - window.innerHeight < -200 &&
+        profileText.getClientRects()[0].bottom > 200) {
+        profileText.style.opacity = 1;
+        profileText.style.transform = "translateX(0)";
+        humanoid.show = true;
+    } else {
+        profileText.style.opacity = 0;
+        profileText.style.transform = "translateX(-100px)";
+        humanoid.show = false;
+    }
+
+    //education text
+    if (educationText.getClientRects()[0].top - window.innerHeight < -200 &&
+        educationText.getClientRects()[0].bottom > 200) {
+        educationText.style.opacity = 1;
+        educationText.style.transform = "translateX(0)";
+        gradHat.show = true;
+    } else {
+        educationText.style.opacity = 0;
+        educationText.style.transform = "translateX(100px)";
+        gradHat.show = false;
+    }
+
+    //experience text
+    if (experienceText.getClientRects()[0].top - window.innerHeight < -200 &&
+        experienceText.getClientRects()[0].bottom > 200) {
+        experienceText.style.opacity = 1;
+        experienceText.style.transform = "translateX(0)";
+        computer.show = true;
+    } else {
+        experienceText.style.opacity = 0;
+        experienceText.style.transform = "translateX(-100px)";
+        computer.show = false;
+    }
+
+});
+
+window.addEventListener("keydown", function (e) {
+    if (e.key == "ArrowUp") {
+        camera.position.z += 1;
+    }
 });
 
 
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+
+    if (humanoid != undefined) {
+        humanoid.rotation.y += 0.01;
+
+        if (humanoid.show) {
+            if (humanoid.position.z < 0) {
+                humanoid.position.z += 1;
+            }
+        } else {
+            if (humanoid.position.z > -50) {
+                humanoid.position.z -= 1;
+            }
+        }
+
+    }
+
+    if (gradHat != undefined) {
+        gradHat.rotation.y += 0.01;
+
+        if (gradHat.show) {
+            if (gradHat.position.z < 0) {
+                gradHat.position.z += 1;
+            }
+        } else {
+            if (gradHat.position.z > -50) {
+                gradHat.position.z -= 1;
+            }
+        }
+
+    }
+
+    if (computer != undefined) {
+        computer.rotation.y += 0.01;
+
+        if (computer.show) {
+            if (computer.position.z < 0) {
+                computer.position.z += 1;
+            }
+        } else {
+            if (computer.position.z > -50) {
+                computer.position.z -= 1;
+            }
+        }
+
+    }
+
 
     sphere.rotation.y -= 0.01;
 
