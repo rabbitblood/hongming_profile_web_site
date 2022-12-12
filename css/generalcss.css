@@ -47,6 +47,7 @@ h2{
 .content-container{
     margin-top: 100vh;
     text-align: center;
+    overflow: hidden;
     
 }
 .content-title{
