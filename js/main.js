@@ -73,17 +73,17 @@ scene.add(sphere);
 //light
 const light1 = new THREE.PointLight("red", 1, 50);
 light1.intensity = 40;
-light1.position.set(20, 0, 5);
+light1.position.set(20, 5, 5);
 scene.add(light1);
 
 const light2 = new THREE.PointLight("blue", 1, 50);
 light2.intensity = 40;
-light2.position.set(-20, 0, 5);
+light2.position.set(-20, 5, 5);
 scene.add(light2);
 
 const light3 = new THREE.PointLight("white", 1, 10);
 light3.intensity = 20;
-light3.position.set(0, 0, 5);
+light3.position.set(0, 5, 5);
 scene.add(light3);
 
 //control
