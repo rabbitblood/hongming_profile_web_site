@@ -50,6 +50,9 @@ h2{
     
 }
 .content-title{
-    margin-top: 50vh;
+    margin-top: 70vh;
+    transition: all 0.5s ease-in-out;
+}
+.content{
     transition: all 0.5s ease-in-out;
 }

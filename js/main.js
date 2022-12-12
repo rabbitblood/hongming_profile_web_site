@@ -227,6 +227,26 @@ document.addEventListener("scroll", function (e) {
         computer.show = false;
     }
 
+    //project text
+    if (projectText.getClientRects()[0].top - window.innerHeight < -200 &&
+        projectText.getClientRects()[0].bottom > 200) {
+        projectText.style.opacity = 1;
+        projectText.style.transform = "translateX(0)";
+    } else {
+        projectText.style.opacity = 0;
+        projectText.style.transform = "translateX(100px)";
+    }
+
+    //skill text
+    if (skillText.getClientRects()[0].top - window.innerHeight < -200 &&
+        skillText.getClientRects()[0].bottom > 200) {
+        skillText.style.opacity = 1;
+        skillText.style.transform = "translateX(0)";
+    } else {
+        skillText.style.opacity = 0;
+        skillText.style.transform = "translateX(-100px)";
+    }
+
 });
 
 window.addEventListener("keydown", function (e) {
